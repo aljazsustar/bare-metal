@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "STM32G491RE",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/libopencm3/**"
+            ],
+            "defines": [
+                "STM32G4",
+                "DEBUG"
+            ],
+            "compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

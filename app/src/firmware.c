@@ -4,9 +4,22 @@
 #include <libopencm3/stm32/flash.h>
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/cm3/systick.h>
+#include <libopencm3/cm3/vector.h>
 
 #define LED_PORT 0x48000000
 #define LED_PIN  1 << 5
+#define CPU_FREQ 96000000
+#define SYSTICK_FREQ 1000
+
+volatile uint64_t ticks = 0;
+
+void sys_tick_handler(void) {
+    ticks++;
+}
+
+static uint64_t get_ticks(void) {
+    return ticks;
+}
 
 static void gpio_setup(void)
 {
@@ -15,27 +28,26 @@ static void gpio_setup(void)
     gpio_mode_setup(LED_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, LED_PIN);
 }
 
-/* Simple busy-wait delay (approx; not precise) */
-static void delay_ms_approx(uint32_t ms)
-{
-    volatile uint32_t n = ms * 1200; /* tuned for roughly 1 ms at 96 MHz */
-    while (n--) __asm__("nop");
+static void systick_setup(void) {
+    systick_set_frequency(SYSTICK_FREQ, CPU_FREQ);
+    systick_counter_enable();
+    systick_interrupt_enable();
 }
 
 int main(void)
 {
-    /* Use libopencm3 G4 clock helper to set 96 MHz from HSI16 */
-    /* This uses rcc_hsi_configs[RCC_CLOCK_3V3_96MHZ] provided by libopencm3 g4 code. */
     rcc_clock_setup_pll(&rcc_hsi_configs[RCC_CLOCK_3V3_96MHZ]);
 
-    /* Optional: check system frequency vars (debug) */
-    /* rcc_ahb_frequency should now be 96_000_000 */
-
     gpio_setup();
+    systick_setup();
+
+    uint64_t start_time = get_ticks();
 
     while (1) {
-        gpio_toggle(LED_PORT, LED_PIN);
-        delay_ms_approx(5000);
+        if (get_ticks() - start_time >= 1000) {
+            gpio_toggle(LED_PORT, LED_PIN);
+            start_time = get_ticks();
+        }
     }
 
     /* never reached */

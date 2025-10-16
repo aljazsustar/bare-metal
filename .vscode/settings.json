@@ -1,0 +1,6 @@
+{
+"C_Cpp.default.configuration": "STM32G491RE",
+"files.associations": {
+    "vector.h": "c"
+}
+}
