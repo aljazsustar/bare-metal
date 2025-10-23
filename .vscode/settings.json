@@ -1,6 +1,10 @@
 {
 "C_Cpp.default.configuration": "STM32G491RE",
 "files.associations": {
-    "vector.h": "c"
+    "vector.h": "c",
+    "gpio.h": "c",
+    "common.h": "c",
+    "exti.h": "c",
+    "syscfg.h": "c"
 }
 }

@@ -5,6 +5,7 @@
       "cwd": "${workspaceFolder}/app",
       "executable": "./firmware.elf",
       "servertype": "stutil",
+      "serverArgs": ["--connect-under-reset"],
       "request": "launch",
       "type": "cortex-debug",
       "device": "STM32G491RE",
@@ -17,6 +18,8 @@
       "cwd": "${workspaceFolder}/bootloader",
       "executable": "./bootloader.elf",
       "servertype": "stutil",
+      "serverpath": "/opt/homebrew/bin/st-util",
+      "serverArgs": ["--connect-under-reset"],
       "request": "launch",
       "type": "cortex-debug",
       "device": "STM32G491RE",
@@ -33,7 +36,8 @@
       "type": "cortex-debug",
       "device": "STM32G491RE",
       "runToEntryPoint": "main",
-      "interface": "swd"
+      "interface": "swd",
+      "showDevDebugOutput": "parsed"
     },
     {
       "name": "ST-Link: Attach to Bootloader",
