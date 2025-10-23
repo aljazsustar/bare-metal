@@ -11,6 +11,7 @@ void sys_tick_handler(void) {
 
 static void rcc_setup(void) {
     rcc_clock_setup_pll(&rcc_hsi_configs[RCC_CLOCK_3V3_96MHZ]);
+    rcc_periph_clock_enable(RCC_SYSCFG);
 }
 
 static void systick_setup(void) {
