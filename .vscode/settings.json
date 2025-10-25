@@ -5,6 +5,7 @@
     "gpio.h": "c",
     "common.h": "c",
     "exti.h": "c",
-    "syscfg.h": "c"
+    "syscfg.h": "c",
+    "timer.h": "c"
 }
 }
